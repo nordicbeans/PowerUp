@@ -235,6 +235,12 @@ function set-WebSite($websiteName, $appPoolName, $fullPath, $hostHeader, $protoc
 	CreateWebsite $websiteName $appPoolName $fullPath $protocol $ip $port $hostHeader
 }
 
+function set-WebsiteAuthentication($websiteName, $authenticationType, $enabled)
+{
+	write-host "Setting authentication for website:$websiteName and authentication type:$authenticationType to enabled = $enabled"
+	Set-WebConfigurationProperty -filter "system.webserver/security/authentication/${authenticationType}" -name "enabled" -value $enabled -location $websiteName
+}
+
 function set-SelfSignedSslCertificate($certName)
 {	
 	write-host "Ensuring existance of self signed ssl certificate $certName"
@@ -357,4 +363,4 @@ function End-WebChangeTransaction()
 	return End-WebCommitDelay
 }
 
-export-modulemember -function set-webapppool32bitcompatibility, set-apppoolidentitytouser, set-apppoolidentityType, set-apppoolstartMode, new-webapplication, new-virtualdirectory, start-apppoolandsite, start-apppool, start-site, stop-apppoolandsite, set-website, uninstall-website, set-webapppool, uninstall-webapppool,set-websitebinding, New-WebSiteBinding, New-WebSiteBindingNonHttp, set-SelfSignedSslCertificate, set-sslbinding, Set-WebsiteForSsl, set-property, Begin-WebChangeTransaction, End-WebChangeTransaction
+export-modulemember -function set-webapppool32bitcompatibility, set-apppoolidentitytouser, set-apppoolidentityType, set-apppoolstartMode, new-webapplication, new-virtualdirectory, start-apppoolandsite, start-apppool, start-site, stop-apppoolandsite, set-website, set-websiteAuthentication, uninstall-website, set-webapppool, uninstall-webapppool,set-websitebinding, New-WebSiteBinding, New-WebSiteBindingNonHttp, set-SelfSignedSslCertificate, set-sslbinding, Set-WebsiteForSsl, set-property, Begin-WebChangeTransaction, End-WebChangeTransaction
